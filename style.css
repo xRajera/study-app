@@ -1,0 +1,88 @@
+/* style.css */
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  max-width: 1000px;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.question-area {
+  margin-bottom: 20px;
+}
+
+#questionImage {
+  max-width: 100%;
+  max-height: 60vh;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.answers {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.option {
+  padding: 15px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.option:hover {
+  background-color: #0056b3;
+}
+
+.result {
+  font-size: 20px;
+  margin-bottom: 20px;
+  min-height: 30px;
+}
+
+.controls button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+}
+
+#endBtn {
+  background-color: #dc3545;
+}
+
+@media (max-width: 600px) {
+  .option {
+    flex: 1 1 100%;
+    font-size: 20px;
+    padding: 15px;
+  }
+
+  .controls button {
+    flex: 1 1 100%;
+    margin-top: 10px;
+  }
+}
