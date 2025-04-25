@@ -6,21 +6,30 @@ body, html {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
 }
 
 .container {
   max-width: 1000px;
+  margin: 0 auto;
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
 }
 
 .question-area {
+  flex: 1;
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 #questionImage {
@@ -34,6 +43,7 @@ body, html {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
 }
 
 .answers {
@@ -65,9 +75,16 @@ body, html {
   min-height: 30px;
 }
 
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
 .controls button {
   padding: 10px 20px;
-  margin: 0 10px;
   font-size: 16px;
   border: none;
   border-radius: 6px;
@@ -93,32 +110,28 @@ body, html {
   }
 }
 
-@media (max-width: 1000px) and (orientation: landscape) {
-  body, html {
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 10px;
-  }
-
+@media (orientation: landscape) and (max-height: 500px) {
   .container {
-    display: flex;
     flex-direction: row;
-    gap: 20px;
-    width: 100%;
-    max-width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 10px;
   }
 
   .question-area {
     flex: 2;
+    margin-bottom: 0;
+    justify-content: center;
   }
 
-  .interaction-panel {
+  .flex-wrapper {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     gap: 20px;
+    max-width: 300px;
   }
 
   .answers, .controls {
