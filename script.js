@@ -2,62 +2,104 @@
 
 let questions = [];
 let answers = {};
-let seen = new Set();
-let current = null;
+let usedQuestions = new Set();
+let currentQuestion = "";
 let score = 0;
-let total = 0;
 
+// DOM elements
+const questionImage = document.getElementById('questionImage');
+const result = document.getElementById('result');
+const nextBtn = document.getElementById('nextBtn');
+const endBtn = document.getElementById('endBtn');
+const optionButtons = Array.from(document.getElementsByClassName('option'));
+
+// Load the answers.json
 fetch('answers.json')
-    .then(res => res.json())
-    .then(data => {
-        answers = data;
-        questions = Object.keys(data);
-        loadRandomQuestion();
-    });
-
-document.querySelectorAll('.option').forEach(btn => {
-    btn.addEventListener('click', () => checkAnswer(btn.dataset.option));
-});
-
-document.getElementById('nextBtn').addEventListener('click', loadRandomQuestion);
-document.getElementById('endBtn').addEventListener('click', confirmEnd);
+  .then(response => response.json())
+  .then(data => {
+    answers = data;
+    questions = Object.keys(answers);
+    loadRandomQuestion();
+  })
+  .catch(error => console.error('Error loading answers.json:', error));
 
 function loadRandomQuestion() {
-    const available = questions.filter(q => !seen.has(q));
-    if (available.length === 0) return showFinalScore();
+  if (usedQuestions.size === questions.length) {
+    alert("You've answered all the questions!");
+    showFinalScore();
+    return;
+  }
 
-    const q = available[Math.floor(Math.random() * available.length)];
-    current = q;
-    seen.add(q);
+  // Pick a random unused question
+  let randomIndex;
+  do {
+    randomIndex = Math.floor(Math.random() * questions.length);
+  } while (usedQuestions.has(questions[randomIndex]));
 
-    document.getElementById('questionImage').src = `questions/${q}`;
-    document.getElementById('result').textContent = "";
-    document.querySelectorAll('.option').forEach(btn => btn.disabled = false);
-    document.getElementById('nextBtn').disabled = true;
+  currentQuestion = questions[randomIndex];
+  usedQuestions.add(currentQuestion);
+
+  // Set the image source
+  questionImage.src = `questions/${currentQuestion}.png`;
+  questionImage.alt = `Question ${currentQuestion}`;
+
+  // Reset button styles
+  optionButtons.forEach(button => {
+    button.disabled = false;
+    button.style.backgroundColor = '#007bff';
+    button.style.color = 'white';
+  });
+
+  result.textContent = "";
+  nextBtn.style.display = 'none';
 }
+
+// Handle answer click
+optionButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    checkAnswer(button.id);
+  });
+});
 
 function checkAnswer(selected) {
-    total++;
-    const correct = answers[current];
-    if (selected === correct) {
-        score++;
-        document.getElementById('result').textContent = 'Correct!';
-        document.getElementById('result').style.color = 'green';
-    } else {
-        document.getElementById('result').textContent = `Wrong. Correct answer: ${correct}`;
-        document.getElementById('result').style.color = 'red';
+  const correct = answers[currentQuestion];
+
+  optionButtons.forEach(button => {
+    button.disabled = true;
+    if (button.id === correct) {
+      button.style.backgroundColor = '#28a745'; // Green for correct
+    } else if (button.id === selected) {
+      button.style.backgroundColor = '#dc3545'; // Red for wrong
     }
-    document.querySelectorAll('.option').forEach(btn => btn.disabled = true);
-    document.getElementById('nextBtn').disabled = false;
+  });
+
+  if (selected === correct) {
+    result.textContent = "Correct!";
+    score++;
+  } else {
+    result.textContent = `Wrong! Correct answer: ${correct}`;
+  }
+
+  nextBtn.style.display = 'inline-block';
 }
 
-function confirmEnd() {
-    if (confirm("Are you sure you want to end the session?")) {
-        showFinalScore();
-    }
-}
+// Load next question
+nextBtn.addEventListener('click', loadRandomQuestion);
+
+// Confirm before ending session
+endBtn.addEventListener('click', () => {
+  if (confirm("Are you sure you want to end the session?")) {
+    showFinalScore();
+  }
+});
+
+// Catch page closing (X button)
+window.addEventListener('beforeunload', function (e) {
+  e.preventDefault();
+  e.returnValue = '';
+});
 
 function showFinalScore() {
-    alert(`Final Score: ${score}/${total}`);
-    location.reload();
+  alert(`Session Ended.\nYour Score: ${score}/${usedQuestions.size}`);
+  location.reload();
 }
