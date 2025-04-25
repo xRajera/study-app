@@ -30,6 +30,12 @@ body, html {
   border-radius: 10px;
 }
 
+.flex-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .answers {
   display: flex;
   justify-content: center;
@@ -74,7 +80,7 @@ body, html {
   background-color: #dc3545;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px) and (orientation: portrait) {
   .option {
     flex: 1 1 100%;
     font-size: 20px;
@@ -84,5 +90,44 @@ body, html {
   .controls button {
     flex: 1 1 100%;
     margin-top: 10px;
+  }
+}
+
+@media (max-width: 1000px) and (orientation: landscape) {
+  body, html {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .question-area {
+    flex: 2;
+  }
+
+  .interaction-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .answers, .controls {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .option, .controls button {
+    width: 100%;
   }
 }
