@@ -74,10 +74,10 @@ function checkAnswer(selected) {
   });
 
   if (selected === correct) {
-    result.textContent = "Correct!";
+    result.textContent = "Super!";
     score++;
   } else {
-    result.textContent = `Wrong! Correct answer: ${correct}`;
+    result.textContent = `Źle! Prawidłowa odp.: ${correct}`;
   }
 
   nextBtn.style.display = 'inline-block';
@@ -88,7 +88,7 @@ nextBtn.addEventListener('click', loadRandomQuestion);
 
 // Confirm before ending session
 endBtn.addEventListener('click', () => {
-  if (confirm("Are you sure you want to end the session?")) {
+  if (confirm("Czy na pewno chcesz zakończyć sesję?")) {
     showFinalScore();
   }
 });
@@ -100,6 +100,6 @@ window.addEventListener('beforeunload', function (e) {
 });
 
 function showFinalScore() {
-  alert(`Session Ended.\nYour Score: ${score}/${usedQuestions.size}`);
+  alert(`Koniec sesji.\nTwój wynik: ${score}/${usedQuestions.size}`);
   location.reload();
 }
