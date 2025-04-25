@@ -40,7 +40,7 @@ function loadRandomQuestion() {
   usedQuestions.add(currentQuestion);
 
   // Set the image source
-  questionImage.src = `questions/${currentQuestion}.png`;
+  questionImage.src = `questions/${currentQuestion}`;
   questionImage.alt = `Question ${currentQuestion}`;
 
   // Reset button styles
