@@ -39,31 +39,9 @@ function loadRandomQuestion() {
   currentQuestion = questions[randomIndex];
   usedQuestions.add(currentQuestion);
 
-  // Extract base name (remove extension)
-  const baseName = currentQuestion.replace(/\.(png|PNG)$/, "");
-
-  // Try to load .png, fall back to .PNG
-  const tryImage = (name) => {
-    const img = new Image();
-    img.onload = () => {
-      questionImage.src = img.src;
-      questionImage.alt = `Question ${name}`;
-    };
-    img.onerror = () => {
-      const fallback = new Image();
-      fallback.onload = () => {
-        questionImage.src = fallback.src;
-        questionImage.alt = `Question ${name}`;
-      };
-      fallback.onerror = () => {
-        questionImage.alt = "Image not found.";
-      };
-      fallback.src = `questions/${baseName}.PNG`;
-    };
-    img.src = `questions/${baseName}.png`;
-  };
-
-  tryImage(baseName);
+  // Set the image source
+  questionImage.src = questions/${currentQuestion};
+  questionImage.alt = Question ${currentQuestion};
 
   // Reset button styles
   optionButtons.forEach(button => {
@@ -99,7 +77,7 @@ function checkAnswer(selected) {
     result.textContent = "Super!";
     score++;
   } else {
-    result.textContent = `Źle! Prawidłowa odp.: ${correct}`;
+    result.textContent = Źle! Prawidłowa odp.: ${correct};
   }
 
   nextBtn.style.display = 'inline-block';
@@ -122,6 +100,6 @@ window.addEventListener('beforeunload', function (e) {
 });
 
 function showFinalScore() {
-  alert(`Koniec sesji.\nTwój wynik: ${score}/${usedQuestions.size}`);
+  alert(Koniec sesji.\nTwój wynik: ${score}/${usedQuestions.size});
   location.reload();
 }
