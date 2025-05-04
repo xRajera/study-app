@@ -40,8 +40,8 @@ function loadRandomQuestion() {
   usedQuestions.add(currentQuestion);
 
   // Set the image source
-  questionImage.src = questions/${currentQuestion};
-  questionImage.alt = Question ${currentQuestion};
+  questionImage.src = `questions/${currentQuestion}`;
+  questionImage.alt = `Question ${currentQuestion}`;
 
   // Reset button styles
   optionButtons.forEach(button => {
@@ -77,7 +77,7 @@ function checkAnswer(selected) {
     result.textContent = "Super!";
     score++;
   } else {
-    result.textContent = Źle! Prawidłowa odp.: ${correct};
+    result.textContent = `Źle! Prawidłowa odp.: ${correct}`;
   }
 
   nextBtn.style.display = 'inline-block';
@@ -100,6 +100,6 @@ window.addEventListener('beforeunload', function (e) {
 });
 
 function showFinalScore() {
-  alert(Koniec sesji.\nTwój wynik: ${score}/${usedQuestions.size});
+  alert(`Koniec sesji.\nTwój wynik: ${score}/${usedQuestions.size}`);
   location.reload();
 }
