@@ -39,9 +39,31 @@ function loadRandomQuestion() {
   currentQuestion = questions[randomIndex];
   usedQuestions.add(currentQuestion);
 
-  // Set the image source
-  questionImage.src = `questions/${currentQuestion}`;
-  questionImage.alt = `Question ${currentQuestion}`;
+  // Extract base name (remove extension)
+  const baseName = currentQuestion.replace(/\.(png|PNG)$/, "");
+
+  // Try to load .png, fall back to .PNG
+  const tryImage = (name) => {
+    const img = new Image();
+    img.onload = () => {
+      questionImage.src = img.src;
+      questionImage.alt = `Question ${name}`;
+    };
+    img.onerror = () => {
+      const fallback = new Image();
+      fallback.onload = () => {
+        questionImage.src = fallback.src;
+        questionImage.alt = `Question ${name}`;
+      };
+      fallback.onerror = () => {
+        questionImage.alt = "Image not found.";
+      };
+      fallback.src = `questions/${baseName}.PNG`;
+    };
+    img.src = `questions/${baseName}.png`;
+  };
+
+  tryImage(baseName);
 
   // Reset button styles
   optionButtons.forEach(button => {
